@@ -1,0 +1,120 @@
+{% extends 'index.html' %}{% block content%}
+{% load static %}
+<style>
+    .summer-items {
+        padding: 10px;
+        border-radius: 20px;
+        background-color: lightyellow;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    }
+
+    .summer-items ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .summer-items li {
+        /* float: left; */
+        text-align: center;
+        font-size: large;
+        font-weight: 600;
+    }
+</style>
+
+<!-- Page Header Start -->
+<div class="page-header mb-0" style="height: 100px !important;overflow: hidden;">
+    <div class="container" style="height: 100px !important;">
+        <div class="row">
+            <div class="col-12">
+                <h2>ORDER SUMMERY</h2>
+            </div>
+            <div class="col-12">
+                <a href="{%url 'Index' %}">Home</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container ">
+    <h4 class="text-center mt-5">Pending Orders</h4>
+    {% for message in messages %}
+    <h6 style="color:red;text-align:center">{{message}}</h6> 
+    {% endfor %}
+    {% for item in delivery_address_pending%}
+    <div class="summer-items mt-3">
+        <ul>
+            <li><img src="{%static 'img\feature-1.jpg' %}" width="40px" height="40px" style="object-fit: contain;" alt=""></li>
+            <li>{{item.order.item}}</li>
+            <li>₹ {{item.order.total_amount}}</li>
+            <li>Estimated Time: {{item.estimated_time}}</li>
+            <li>{{item.order_status}}</li>
+        </ul>
+        <ul class="mt-4">
+            <li>{{item.name}}</li>
+            <li>{{item.address}}</li>
+            <li>{{item.phone}}</li>
+            <li><a href="{%url 'order_summary' item.id%}" class="btn btn-info">View</a></li>
+            <li><a href="{%url 'cancel_order' item.id %}" class="btn btn-warning btn-sm">Cancel Order</a></li>
+
+        </ul>
+      
+            <p>Ordered items:</p>
+        <ul>
+            {% for order_item in item.order.order_items.all %}
+                <li>
+                    {{ order_item.product.name }} - {{ order_item.quantity }} x ₹{{ order_item.product.rate }} = ₹{{ order_item.total_price }}
+                </li>
+            {% endfor %}
+        </ul>
+        </p>
+        <div>
+            <div class="progress">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h4 class="text-center mt-5">Completed Orders</h4>
+
+    {% for item in delivery_address_completed%}
+    <div class="summer-items mt-3">
+        <ul>
+            <li><img src="{%static 'img\feature-1.jpg' %}" width="40px" height="40px" style="object-fit: contain;" alt=""></li>
+            <li>{{item.order.item}}</li>
+            <li>₹ {{item.order.total_amount}}</li>
+            <li>Delivered Time: {{item.estimated_time}}</li>
+            <li>{{item.order_status}}</li>
+        </ul>
+        <ul class="mt-4">
+            <li>{{item.name}}</li>
+            <li>{{item.address}}</li>
+            <li>{{item.phone}}</li>
+            <li><a href="{%url 'order_summary' item.id%}" class="btn btn-info">View</a></li>
+
+        </ul>
+        <p>Order Items:
+           
+        <ul>
+            {% for order_item in item.order.order_items.all %}
+                <li>
+                    {{ order_item.product.name }} - {{ order_item.quantity }} x ₹{{ order_item.product.rate }} = ₹{{ order_item.total_price }}
+                </li>
+            {% endfor %}
+        </ul>
+        </p>
+        <div>
+            <div class="progress">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}

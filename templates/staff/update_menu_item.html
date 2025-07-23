@@ -1,0 +1,62 @@
+{% extends 'staff/staffindex.html' %}
+{% block content %}
+<style>
+    .content {
+        width: 80%;
+        padding: 20px;
+        margin: auto;
+        box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, 
+                    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, 
+                    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        border-radius: 20px;
+        background-color: #f9f9f9;
+    }
+    .image-preview {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 5px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="content">
+        <h4>Update Product</h4>
+        {% for message in messages %}
+        <h6 style="color:red;text-align:center">{{message}}</h6> 
+        {% endfor %}
+        <!-- Button tr -->
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form %}
+                <div class="col-md-6 mt-3">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+
+                    {% if field.name == "image" %}
+                        {% if form.instance.image %}
+                        <img src="{{ form.instance.image.url }}" alt="Current Image" class="image-preview">
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+           
+
+            <br><br>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <div class="form-check mt-4">
+            <p>Offer Status {%if form.instance.offer == True %} <span class="badge bg-success">This Item has Offer</span > {% else %} <span class="badge bg-warning">No Offer</span>{% endif%}</p>
+
+            <a href="{%url 'Change_offer_status' form.instance.id %}" onclick="return confirm('Do you Wat to Change offer status ??')" class="btn btn-info btn-sm">Change Offer Status</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

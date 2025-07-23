@@ -1,0 +1,63 @@
+{% extends 'staff/staffindex.html'%}
+{% block content %}
+<style>
+    .orders{
+        width: 300px;
+        padding: 10px;
+        margin: auto;
+        border: 1px solid gray;
+
+    }
+    .order-container{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
+</style>
+
+<div class="container">
+    <div class="content-header">
+        <h4 class="text-center">Completed Orders</h4>
+    
+        <h6 class="text-danger text-center">{{form.errors}}</h6>
+        {% for message in messages %}
+        <h6 style="color:red;text-align:center">{{message}}</h6> 
+        {% endfor %}
+        <!-- Button trigger modal -->
+    </div>
+<div class="order-container">
+
+    {% for item in delivery %}
+    <div class="orders">
+        <h5>Order Number: {{item.order.order_number}} </h5>
+        <p>Order Time: {{item.ordered_time}}</p>
+        <p>Completed Time: {{item.estimated_time}}</p>
+        <p>Order Status: {{item.order_status}}</p>
+        <p>Ordered items</p>
+        <p>Ordered items:</p>
+        <ul>
+            {% for order_item in item.order.order_items.all %}
+                <li>
+                    {{ order_item.product.name }} - {{ order_item.quantity }} x ₹{{ order_item.product.rate }} = ₹{{ order_item.total_price }}
+                </li>
+            {% endfor %}
+        </ul>
+        <span></span>
+        <p>Address:
+            <br>
+            {{item.name}} <br>
+            {{item.phone}} <br>
+            {{item.address}}
+        </p>
+        Rating: <span class="text-danger">{{item.rating}}/5</span>
+    </div>
+    {% endfor %}
+
+
+
+    
+</div>
+</div>
+
+
+        {% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'index.html' %} {% block content%}
+
+
+
+<!-- Page Header Start -->
+<div class="page-header mb-0" style="height: 100px !important;overflow: hidden;">
+    <div class="container" style="height: 100px !important;">
+        <div class="row">
+            <div class="col-12">
+                <h2>MENU</h2>
+            </div>
+            <div class="col-12">
+                <a href="{%url 'Index' %}">Home</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+        <!-- Menu Start -->
+        <div class="menu mt-5">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2>Food Menu</h2>
+                </div>
+                <div class="menu-tab">
+                    <ul class="nav nav-pills justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href="#maincourse">Main Dishes </a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link " data-toggle="pill" href="#burgers">Hot Drinks</a>
+                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#snacks">Snacks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#beverages">Drinks</a>
+                        </li>
+                    </ul>
+                   
+<div class="tab-content">
+    <div id="burgers" class="container tab-pane fade">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                {% for item in menuitem %}
+                    {% if item.category == "Diet_Food" %}
+                    <div class="menu-item">
+                        <div class="menu-img">
+                            <img src="{{ item.image.url }}" alt="Image">
+                        </div>
+                        <div class="menu-text">
+                            <h3><span>{{ item.name }}</span> <strong>₹{{ item.rate }} &nbsp;&nbsp;&nbsp;&nbsp; 
+                                <a href="{%url 'add_item_to_order' item.id %}" class="btn btn-outline-warning btn-sm">Add Item</a></strong> 
+                            </h3>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="snacks" class="container tab-pane fade">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                {% for item in menuitem %}
+                    {% if item.category == "Snakes" %}
+                    <div class="menu-item">
+                        <div class="menu-img">
+                            <img src="{{ item.image.url }}" alt="Image">
+                        </div>
+                        <div class="menu-text">
+                            <h3><span>{{ item.name }}</span> <strong>₹{{ item.rate }} &nbsp;&nbsp;&nbsp;&nbsp; 
+                                <a href="{%url 'add_item_to_order' item.id %}" class="btn btn-outline-warning btn-sm">Add Item</a></strong> 
+                            </h3>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="beverages" class="container tab-pane fade">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                {% for item in menuitem %}
+                    {% if item.category == "Beverages" %}
+                    <div class="menu-item">
+                        <div class="menu-img">
+                            <img src="{{ item.image.url }}" alt="Image">
+                        </div>
+                        <div class="menu-text">
+                            <h3><span>{{ item.name }}</span> <strong>₹{{ item.rate }} &nbsp;&nbsp;&nbsp;&nbsp; 
+                                <a href="{%url 'add_item_to_order' item.id %}" class="btn btn-outline-warning btn-sm">Add Item</a></strong> 
+                            </h3>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="maincourse" class="container tab-pane active">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                {% for item in menuitem %}
+                    {% if item.category == "Food" %}
+                    <div class="menu-item">
+                        <div class="menu-img">
+                            <img src="{{ item.image.url }}" alt="Image">
+                        </div>
+                        <div class="menu-text">
+                            <h3><span>{{ item.name }}</span> <strong>₹{{ item.rate }}  &nbsp;&nbsp;&nbsp;&nbsp; 
+                                <a href="{%url 'add_item_to_order' item.id %}" class="btn btn-outline-warning btn-sm">Add Item</a></strong> 
+                           </h3>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Menu End -->
+        
+
+
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'index.html' %}{% block content %}
+<style>
+    .content {
+        padding: 10px;
+
+    }
+
+    .menuitems {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: baseline;
+        height: 500px;
+        overflow: auto;
+
+    }
+
+    .item {
+        width: 200px;
+        height: 200px;
+        padding: 7px;
+        border: .5px solid gray;
+        background-color: whitesmoke;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .item .image {
+        width: 100%;
+        height: 130px;
+
+    }
+
+    .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
+
+<!-- Page Header Start -->
+<div class="page-header mb-0" style="height: 100px !important;overflow: hidden;">
+    <div class="container" style="height: 100px !important;">
+        <div class="row">
+            <div class="col-12">
+                <h2>CART</h2>
+            </div>
+            <div class="col-12">
+                <a href="{%url 'Index' %}">Home</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container">
+    <div class="content">
+        <h5 class="text-center">Items To Order</h5>
+        <div class="row">
+            <div class=" col-md-6">
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Sl</th>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order_items %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td> <!-- Serial number -->
+                            <td>{{ item.product.name }}</td> <!-- Item name -->
+                            <td>₹{{ item.product.rate }}</td> <!-- Price per item -->
+                            <td>
+                                <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-warning btn-sm">-</a>
+                                <input type="text" value="{{ item.quantity }}" step="1" style="width: 30px;padding: 10px;border: none;" readonly>
+                                <a href="{% url 'increase_quantity' item.id %}" class="btn btn-success btn-sm">+</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">X</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><strong>Total Amount:</strong></td>
+                            <td colspan="3">₹{{ order.total_amount }}</td> <!-- Display total amount -->
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="d-grid gap-2">
+                <a href="" data-bs-target="#exampleModal3" data-bs-toggle="modal" class="btn btn-warning" style="width: 100%;">Place Order</a>
+                <!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delivery address</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            <label for="">Name: </label>
+            <input type="text" name="name" class="form-control" placeholder="Name" required>
+
+            <br>
+
+            <label for="">Phone: </label>
+            <input type="number" name="phone" class="form-control" placeholder="Phone Number" required>
+            <br>
+
+            <label for="">Class Room: </label>
+            <input type="text" name="class" class="form-control" placeholder="Class Room" required>
+<br>
+            <label for="">Delivery Time: </label>
+            <select  name="delivery_time" class="form-control" placeholder="Class Room">
+                <option selected disabled value="Not Specified">-----------------</option>
+                <option value="First Interval">First Interval</option>
+                <option value="Half Day Interval">Half Day Interval</option>
+                <option value="Last  Interval">Last  Interval</option>
+                <option value="Not Specified">Not to Specified</option>
+
+            </select>
+
+<br>
+            <button type="submit" class="btn btn-warning" style="width:100%">Place order</button>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+            </div>
+                
+
+            </div>
+            <div class=" col-md-6">
+
+                <div class="menuitems">
+                    {% for item in menu %}
+                    <a href="{%url 'add_item_to_order' item.id %}">
+                        <div class="item">
+                            <div class="image"><img src="{{item.image.url}}" alt=""></div>
+                            <div class="name">
+                                <span class="text-center" style="font-size: x-small;">{{item.name}}</span><br>
+                                <span style="font-weight: bold;font-size: x-small;">₹ {{item.rate}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

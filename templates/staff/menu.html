@@ -1,0 +1,82 @@
+{% extends 'staff/staffindex.html'%}
+{% block content %}
+
+<div class="container">
+    <div class="content-header">
+        <h4 class="text-center">Menu Items</h4>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                class="bi bi-plus-square"></i> Add Item To Menu</button>
+
+        <h6 class="text-danger text-center">{{form.errors}}</h6>
+        {% for message in messages %}
+        <h6 style="color:red;text-align:center">{{message}}</h6> 
+        {% endfor %}
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form  method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                {% for field in form %}
+                                <div class="col-md-6 mt-3">
+                                    {{field.label }}
+                                    <br>
+                                    {{field}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Add Menu Item</button>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content mt-5">
+        <table class="table">
+            <tr>
+                <th>Image</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Offer</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for item in fooditem %}
+            <tr>
+                <td>
+                    <img src="{{item.image.url}}" width="50px" alt="">
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.category}}</td>
+                <td>{{item.rate}}</td>
+                <td>{% if item.offer == True %} <span class="badge bg-info">Active Offer</span> {% endif %}</td>
+                <td>{% if item.available == True %} <span class="badge bg-success">Available</span> {% endif %}</td>
+                <td>
+                    <a href="{%url 'delete_menu_item' item.id %}" class="btn btn-danger" onclick="return confirm('Are You sure want to delete ? ')"><i class="bi bi-trash3"></i></a>
+                    <a href="{%url 'update_menu_item' item.id %}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

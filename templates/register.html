@@ -1,0 +1,75 @@
+{% extends 'index.html'%}
+{% block content %}
+    <style>
+        .content{
+            width:70%;
+            padding: 20px;
+            border-radius: 10px;
+            margin: auto;
+            border: .5px solid gray;
+            
+
+
+        }
+        .content input{
+            padding: 6px;
+
+        }
+        h6 ul, li{
+            list-style: none;
+        }
+        .content input[type="password"]{
+            padding: 6px;
+            border-radius: 5px;
+            width:100%;
+            border: .5px solid lightblue;
+        }
+    </style>
+
+<!-- Page Header Start -->
+<div class="page-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Register</h2>
+            </div>
+            <div class="col-12">
+                <a href="">Home</a>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<div class="container">
+            <div class="content mt-5 mb-5">
+                <h3>Register</h3>
+                <h6 style="color:red;text-align:center">{{form.errors}}</h6> 
+        <form method="post">
+{% csrf_token %}
+        <br>
+        {% for fields in form %}
+        {{fields.label}}:
+        <br>
+        {{fields}}
+        <br>
+        {% endfor %}
+    
+                    <br>
+                    <button class="btn custom-btn" type="submit">Register</button>
+                </form>
+
+            </div>
+        </div>
+
+
+
+    
+        {% endblock %}
+
+
+
+
+

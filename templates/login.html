@@ -1,0 +1,61 @@
+{% extends 'index.html'%}
+{% block content %}
+    <style>
+        .content{
+            width:50%;
+            padding: 20px;
+            border-radius: 10px;
+            margin: auto;
+            border: .5px solid gray;
+            
+
+
+        }
+        .content input{
+            padding: 6px;
+
+        }
+        h6 ul, li{
+            list-style: none;
+        }
+    </style>
+
+<!-- Page Header Start -->
+<div class="page-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Login</h2>
+            </div>
+            <div class="col-12">
+                <a href="">Home</a>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+        <div class="container">
+            <div class="content mt-5 mb-5">
+                <h3>Login</h3>
+                {% for message in messages %}
+                <h6 style="color:red;text-align:center">{{message}}</h6> 
+                {% endfor %}
+
+                <form method="post">
+{% csrf_token %}
+
+                    <input type="text" placeholder="Username" name="uname" required class="form-control"> <br>
+                    <input type="password" placeholder="Password" name="pswd" required class="form-control"><br>
+                    <button class="btn custom-btn" type="submit">Login</button>
+                </form>
+
+            </div>
+        </div>
+
+
+
+
+    
+   {% endblock %}
